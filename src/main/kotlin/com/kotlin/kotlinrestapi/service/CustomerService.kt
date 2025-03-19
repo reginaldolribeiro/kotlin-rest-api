@@ -1,23 +1,19 @@
 package com.kotlin.kotlinrestapi.service
 
-import com.kotlin.kotlinrestapi.exception.NotFoundException
+import com.kotlin.kotlinrestapi.exception.CustomerNotFoundException
 import com.kotlin.kotlinrestapi.exception.RequiredFieldsException
 import com.kotlin.kotlinrestapi.model.Customer
 import com.kotlin.kotlinrestapi.repository.CustomerRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerService {
-
-    @Autowired
-    lateinit var customerRepository: CustomerRepository
+class CustomerService(private val customerRepository: CustomerRepository) {
 
     fun findById(id: Long): Customer {
         return this.customerRepository
             .findById(id)
-            .orElseThrow { NotFoundException("Customer not found!") }
+            .orElseThrow { CustomerNotFoundException("Customer not found!") }
     }
 
     fun findAll(): List<Customer> {

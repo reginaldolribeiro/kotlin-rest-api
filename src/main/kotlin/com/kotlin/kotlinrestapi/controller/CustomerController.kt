@@ -4,7 +4,6 @@ import com.kotlin.kotlinrestapi.model.Customer
 import com.kotlin.kotlinrestapi.model.UploadResponse
 import com.kotlin.kotlinrestapi.service.CustomerService
 import com.kotlin.kotlinrestapi.service.StorageService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -16,13 +15,10 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("api")
-class CustomerController {
-
-    @Autowired
-    lateinit var customerService: CustomerService
-
-    @Autowired
-    lateinit var storageService: StorageService
+class CustomerController(
+    private val customerService: CustomerService,
+    private val storageService: StorageService
+) {
 
     @GetMapping
     fun findAll() = ResponseEntity.ok(this.customerService.findAll())
